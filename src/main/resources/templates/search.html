@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{../static/css/main.css}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+</head>
+<body>
+<div class="wrapper">
+    <header>
+        <div class="title"> TODOリスト</div>
+        <div class="search"> 検索</div>
+    </header>
+    <div class="main">
+        <div class="text">
+            <p>
+                <input type="text" name="todo" size="40">
+            </p>
+        </div>
+
+        <p class="submit">
+            <input type="submit" value="更新">
+        </p>
+    </div>
+</div>
+</body>
+</html>
