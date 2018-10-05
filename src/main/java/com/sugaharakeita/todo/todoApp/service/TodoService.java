@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -22,8 +22,9 @@ public class TodoService {
     public Todo save(Todo todo) {
         return todoRepository.save(todo);
     }
-//
-//    public Todo findOne(Long id) {
-//        return todoRepository.findOne(id);
-//    }
+
+    public Optional<Todo> findById(Long id) {
+        return todoRepository.findById(id);
+    }
+
 }

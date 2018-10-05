@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Date;
 
 @Entity
 public class Todo {
@@ -12,12 +13,12 @@ public class Todo {
     private Long id;
 
     @NotEmpty
-    @Length(max = 31)
+    @Length(max = 30)
     private String name;
 
     @NotNull
     @Column(name = "limit_date")
-    private String limit;
+    private Date limit;
 
     public Long getId() {
         return id;
@@ -35,11 +36,20 @@ public class Todo {
         this.name = name;
     }
 
-    public String getLimit() {
+    public Date getLimit() {
         return limit;
     }
 
-    public void setLimit(String limit) {
+    public void setLimit(Date limit) {
         this.limit = limit;
+    }
+
+    @Override
+    public String toString() {
+        return "Todo{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", limit=" + limit +
+            '}';
     }
 }

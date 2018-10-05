@@ -10,7 +10,7 @@
 <div class="wrapper">
     <header>
         <div class="title"> TODOリスト</div>
-        <div class="search"> 検索</div>
+        <div class="search"><a th:href="@{/search}">検索</a></div>
     </header>
     <div class="main">
         <div class="ToDoForm">
@@ -18,14 +18,18 @@
                 新しいToDoを作成する
             </div>
 
-            <form th:action="@{/}" th:method="post">
+            <form th:action="@{/}" th:method="post" th:object="${todo}">
                 <div class="text">
                     <p>
-                        ToDo名<input type="text" name="name" size="40">
+                        <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br/>
+                        ToDo名<input type="text" name="name" size="40" th:field="*{name}">
                     </p>
 
                     <p>
-                        期限<input type="date" name="limit">
+                        <span class="text-danger" th:if="${#fields.hasErrors('limit')}"
+                              th:errors="*{limit}"></span><br/>
+                        期限<input type="date" name="limit" th:field="*{limit}">
+
                     </p>
                 </div>
                 <p class="submit">
@@ -33,42 +37,25 @@
                 </p>
             </form>
         </div>
-
-        <div class="TodoList">
-            <div class="ToDo">
-                <tr th:each="todo:${todos}" th:object="${todo}">
+        <tr th:each="todo:${todos}" th:object="${todo}">
+            <div class="TodoList">
+                <div class="ToDo">
                     <td th:text="*{name}"></td>
                     <br/>
                     <td th:text="'期限：' + *{limit}"></td>
                     <br/>
                     作成日：2018年10月5日
-                </tr>
+
+                    <div class="status">
+                        未完了
+                    </div>
+
+                    <div class="edit">
+                        <td><a th:href="@{/{id}/edit(id=*{id})}">編集</a></td>
+                    </div>
+                </div>
             </div>
-
-            <div class="status">
-                未完了
-            </div>
-
-            <div class="edit"><a th:href="@{/{id}/edit(id=*{id})}">編集</a></div>
-
-        </div>
-
-        <div class="TodoList">
-            <div class="ToDo">
-                レポート表紙を作る<br/>
-                期限：2018年12月31日<br/>
-                作成日：2018年10月5日
-            </div>
-
-            <div class="status">
-                完了
-            </div>
-
-            <div class="edit">
-                編集
-            </div>
-
-        </div>
+        </tr>
     </div>
 </div>
 </body>

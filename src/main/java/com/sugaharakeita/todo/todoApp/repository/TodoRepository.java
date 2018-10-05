@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long> {
-//    @Override
-////    List<Todo> findById(Long id);
 }
