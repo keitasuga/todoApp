@@ -32,9 +32,7 @@
 
                     </p>
                 </div>
-                <p class="submit">
-                    <button type="submit">ToDo追加</button>
-                </p>
+                <button type="submit" class="submit">ToDo追加</button>
             </form>
         </div>
         <tr th:each="todo:${todos}" th:object="${todo}">
@@ -46,12 +44,19 @@
                     <br/>
                     作成日：2018年10月5日
 
-                    <div class="status">
-                        未完了
+                    <div>
+                        <form th:action="@{/{id}}" th:method="post" th:object="${todo}">
+                            <input type="hidden" value="0" name="status" class="status"/>
+                            <input type="checkbox" value="1" name="status" class="status"/>
+                            <button type="submit" class="status">未完了</button>
+                        </form>
                     </div>
 
-                    <div class="edit">
-                        <td><a th:href="@{/{id}/edit(id=*{id})}">編集</a></td>
+                    <div>
+                        <button type="button" class="edit"
+                                th:onclick="'location.href= \'' + @{/{id}/edit(id=*{id})} + '\''">
+                            編集
+                        </button>
                     </div>
                 </div>
             </div>

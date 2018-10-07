@@ -95,3 +95,7 @@ header {
     text-align: center;
     border:solid 1px black;
 }
+
+.text-danger {
+    color: red;
+}

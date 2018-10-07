@@ -65,4 +65,11 @@ public class MainController {
         }
     }
 
+    @PostMapping("/{id}")
+    public String finish(@PathVariable Long id, @ModelAttribute Todo todo) {
+        todo.setId(id);
+        todoService.save(todo);
+        return "redirect:/";
+    }
+
 }
