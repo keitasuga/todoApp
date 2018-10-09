@@ -84,7 +84,7 @@ header {
     border:solid 1px black;
 }
 
-.status {
+.status-finished {
     width: 100px;
     height: 70px;
     position: absolute;
@@ -94,8 +94,26 @@ header {
     margin: 15px 20px 0 0;
     text-align: center;
     border:solid 1px black;
+    background-color: aqua;
+}
+
+.status-unfinished {
+    width: 100px;
+    height: 70px;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    line-height: 70px;
+    margin: 15px 20px 0 0;
+    text-align: center;
+    border: solid 1px black;
+    background-color: red;
 }
 
 .text-danger {
     color: red;
+}
+
+.search-box {
+    padding-top: 20px;
 }

@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Entity
 public class Todo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

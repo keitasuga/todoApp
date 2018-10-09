@@ -45,10 +45,14 @@
                     作成日：2018年10月5日
 
                     <div>
-                        <form th:action="@{/{id}}" th:method="post" th:object="${todo}">
-                            <input type="hidden" value="0" name="status" class="status"/>
-                            <input type="checkbox" value="1" name="status" class="status"/>
-                            <button type="submit" class="status">未完了</button>
+                        <form th:action="@{/{id}/finish(id=*{id})}" th:method="post" th:object="${todo}"
+                              id="status_form">
+                            <div th:if="*{status}">
+                                <button type="submit" value="0" name="status" class="status-finished">完了</button>
+                            </div>
+                            <div th:unless="*{status}">
+                                <button type="submit" value="1" name="status" class="status-unfinished">未完了</button>
+                            </div>
                         </form>
                     </div>
 

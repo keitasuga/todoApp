@@ -53,6 +53,12 @@ public class MainController {
         return "edit";
     }
 
+    @GetMapping(value = "/search")
+    public String search(Model model) {
+        List<Todo> todos = todoService.findAll();
+        model.addAttribute("todos", todos);
+        return "search";
+    }
 
     @PostMapping("/{id}/edit")
     public String update(@PathVariable Long id, @Valid @ModelAttribute Todo todo, BindingResult bindingResult) {
@@ -65,7 +71,7 @@ public class MainController {
         }
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/finish")
     public String finish(@PathVariable Long id, @ModelAttribute Todo todo) {
         todo.setId(id);
         todoService.save(todo);
