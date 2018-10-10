@@ -27,5 +27,11 @@ public class TodoService {
         return todoRepository.findById(id);
     }
 
+    public List<Todo> search(String name) {
+        return todoRepository.findByNameContainsAndStatusIsFalse(name);
+    }
 
+    public Todo findByName(String name) {
+        return todoRepository.findByName(name);
+    }
 }

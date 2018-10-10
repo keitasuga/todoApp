@@ -9,7 +9,7 @@
 <body>
 <div class="wrapper">
     <header>
-        <div class="title"> TODOリスト</div>
+        <div class="title"><a href="/">TODOリスト</a></div>
         <div class="search"><a th:href="@{/search}">検索</a></div>
     </header>
     <div class="main">
@@ -42,7 +42,7 @@
                     <br/>
                     <td th:text="'期限：' + *{limit}"></td>
                     <br/>
-                    作成日：2018年10月5日
+                    <td th:text="'作成日：' + *{CreatedAt}"></td>
 
                     <div>
                         <form th:action="@{/{id}/finish(id=*{id})}" th:method="post" th:object="${todo}"

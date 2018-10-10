@@ -9,18 +9,50 @@
 <body>
 <div class="wrapper">
     <header>
-        <div class="title"> TODOリスト</div>
-        <div class="search"> 検索</div>
+        <div class="title"><a href="/">TODOリスト</a></div>
+        <div class="search"><a th:href="@{/search}">検索</a></div>
     </header>
     <div class="main">
         <div class="ToDoForm">
-            <div class="text">
-                <p class="search-box">
-                    <input type="text" name="todo" size="40">
-                </p>
-            </div>
-            <button type="submit" class="submit">検索</button>
+            <form th:action="@{/search/result}" method="get" th:object="${todo}">
+                <div class="text">
+                    <p class="search-box">
+                        <input type="text" name="name" size="40">
+                    </p>
+                </div>
+                <button type="submit" class="submit">検索</button>
+            </form>
         </div>
+        <tr th:each="todo:${results}" th:object="${todo}">
+            <div class="TodoList">
+                <div class="ToDo">
+                    <td th:text="*{name}"></td>
+                    <br/>
+                    <td th:text="'期限：' + *{limit}"></td>
+                    <br/>
+                    作成日：2018年10月5日
+
+                    <div>
+                        <form th:action="@{/{id}/finish(id=*{id})}" th:method="post" th:object="${todo}"
+                              id="status_form">
+                            <div th:if="*{status}">
+                                <button type="submit" value="0" name="status" class="status-finished">完了</button>
+                            </div>
+                            <div th:unless="*{status}">
+                                <button type="submit" value="1" name="status" class="status-unfinished">未完了</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div>
+                        <button type="button" class="edit"
+                                th:onclick="'location.href= \'' + @{/{id}/edit(id=*{id})} + '\''">
+                            編集
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </tr>
     </div>
 </div>
 </body>

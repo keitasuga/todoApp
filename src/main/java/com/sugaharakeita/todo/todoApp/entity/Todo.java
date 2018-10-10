@@ -1,11 +1,13 @@
 package com.sugaharakeita.todo.todoApp.entity;
 
+import com.sugaharakeita.todo.todoApp.validation.Registered;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Todo {
@@ -16,18 +18,19 @@ public class Todo {
 
     @NotEmpty(message = "Todo名を入力してください")
     @Length(max = 30, message = "{max}文字以内で入力してください")
+    @Registered
     private String name;
 
     @NotNull(message = "期限を入力してください")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "limit_date")
-    private Date limit;
+    private LocalDate limit;
 
     private boolean status;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date CreatedAt;
+    private LocalDate CreatedAt;
 
     public Long getId() {
         return id;
@@ -45,11 +48,11 @@ public class Todo {
         this.name = name;
     }
 
-    public Date getLimit() {
+    public LocalDate getLimit() {
         return limit;
     }
 
-    public void setLimit(Date limit) {
+    public void setLimit(LocalDate limit) {
         this.limit = limit;
     }
 
@@ -61,11 +64,11 @@ public class Todo {
         this.status = status;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return CreatedAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    private void setCreatedAt(LocalDate createdAt) {
         CreatedAt = createdAt;
     }
 
@@ -78,5 +81,15 @@ public class Todo {
             ", status=" + status +
             ", CreatedAt=" + CreatedAt +
             '}';
+    }
+
+    @PrePersist
+    public void prePersist() {
+        CreatedAt = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        CreatedAt = LocalDate.now();
     }
 }

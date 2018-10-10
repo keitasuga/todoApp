@@ -55,27 +55,44 @@ public class MainController {
 
     @GetMapping(value = "/search")
     public String search(Model model) {
-        List<Todo> todos = todoService.findAll();
-        model.addAttribute("todos", todos);
         return "search";
     }
+
+    @GetMapping(value = "/search/result")
+    public String search(Model model, @RequestParam("name") String name) {
+        List<Todo> results = todoService.search(name);
+        if (results.size() > 0) {
+            model.addAttribute("results", results);
+            return "search";
+        } else {
+            model.addAttribute("message", "対象のToDoは見つかりません");
+            return "search";
+        }
+    }
+
 
     @PostMapping("/{id}/edit")
     public String update(@PathVariable Long id, @Valid @ModelAttribute Todo todo, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "edit";
-        } else {
-            todo.setId(id);
-            todoService.save(todo);
-            return "redirect:/";
         }
-    }
-
-    @PostMapping("/{id}/finish")
-    public String finish(@PathVariable Long id, @ModelAttribute Todo todo) {
         todo.setId(id);
         todoService.save(todo);
         return "redirect:/";
     }
 
+    @PostMapping("/{id}/finish")
+    public String finish(@PathVariable Long id, @RequestParam("status") Integer status) {
+        Optional<Todo> todoOpt = todoService.findById(id);
+        if (!todoOpt.isPresent()) {
+            return "/error/404";
+        }
+
+        Todo target = todoOpt.get();
+        target.setStatus(1D == status);
+
+        todoService.save(target);
+
+        return "redirect:/";
+    }
 }
