@@ -18,7 +18,7 @@ public class RegisteredValidator implements ConstraintValidator<Registered, Stri
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
-        Todo todo = todoService.findByName(value); // ここのvalueは入力値になります
+        Todo todo = todoService.findByName(value);
         if (todo == null) {
             return true;
         }

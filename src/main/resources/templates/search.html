@@ -23,6 +23,9 @@
                 <button type="submit" class="submit">検索</button>
             </form>
         </div>
+        <div class="notodo">
+            <p class="text-danger" th:text="${message}"></p>
+        </div>
         <tr th:each="todo:${results}" th:object="${todo}">
             <div class="TodoList">
                 <div class="ToDo">
@@ -30,7 +33,7 @@
                     <br/>
                     <td th:text="'期限：' + *{limit}"></td>
                     <br/>
-                    作成日：2018年10月5日
+                    <td th:text="'作成日：' + *{CreatedAt}"></td>
 
                     <div>
                         <form th:action="@{/{id}/finish(id=*{id})}" th:method="post" th:object="${todo}"

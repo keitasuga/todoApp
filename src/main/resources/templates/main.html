@@ -35,6 +35,9 @@
                 <button type="submit" class="submit">ToDo追加</button>
             </form>
         </div>
+        <div th:if="${#lists.isEmpty(todos)}" class="notodo">
+            <p class="text-danger">登録されたToDoはございません</p>
+        </div>
         <tr th:each="todo:${todos}" th:object="${todo}">
             <div class="TodoList">
                 <div class="ToDo">

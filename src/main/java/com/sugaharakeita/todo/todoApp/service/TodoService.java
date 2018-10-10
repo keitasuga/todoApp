@@ -28,7 +28,7 @@ public class TodoService {
     }
 
     public List<Todo> search(String name) {
-        return todoRepository.findByNameContainsAndStatusIsFalse(name);
+        return todoRepository.findByNameContainsAndStatusIsFalseOrderByIdDesc(name);
     }
 
     public Todo findByName(String name) {

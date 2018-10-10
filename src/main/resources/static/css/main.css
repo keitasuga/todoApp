@@ -119,3 +119,9 @@ header {
     padding-top: 30px;
     padding-left: 20px;
 }
+
+.notodo {
+    width: 760px;
+    height: 30px;
+    margin: 0 auto;
+}

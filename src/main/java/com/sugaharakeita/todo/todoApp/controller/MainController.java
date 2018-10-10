@@ -62,6 +62,7 @@ public class MainController {
     public String search(Model model, @RequestParam("name") String name) {
         List<Todo> results = todoService.search(name);
         if (results.size() > 0) {
+            model.addAttribute("message", "ToDoが" + results.size() + "件見つかりました");
             model.addAttribute("results", results);
             return "search";
         } else {
