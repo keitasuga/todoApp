@@ -19,7 +19,7 @@ public class TodoService {
     TodoRepository todoRepository;
 
     public List<Todo> findAll() {
-        return todoRepository.findAll(new Sort(DESC, "createdAt"));
+        return todoRepository.findAll(new Sort(new Sort.Order(DESC, "createdAt"), new Sort.Order(DESC, "Id")));
     }
 
     public Todo create(Todo todo) {
@@ -43,7 +43,7 @@ public class TodoService {
     }
 
     public List<Todo> search(String name) {
-        return todoRepository.findByNameContainsAndStatusIsFalseOrderByCreatedAtDesc(name);
+        return todoRepository.findByNameContainsAndStatusIsFalseOrderByCreatedAtDescIdDesc(name);
     }
 
     public Optional<Todo> findByName(String name) {

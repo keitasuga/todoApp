@@ -9,7 +9,7 @@ import java.util.*;
 
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long> {
-    List<Todo> findByNameContainsAndStatusIsFalseOrderByCreatedAtDesc(String name);
+    List<Todo> findByNameContainsAndStatusIsFalseOrderByCreatedAtDescIdDesc(String name);
 
     Optional<Todo> findByName(String name);
 
