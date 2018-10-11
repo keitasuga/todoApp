@@ -44,7 +44,7 @@ public class MainController {
 
         Optional<Todo> todoOpt = todoService.findByName(todo.getName());
         if (!todoOpt.isPresent()) {
-            todoService.save(todo);
+            todoService.create(todo);
             return "redirect:/";
         } else {
             model.addAttribute("message", "すでに登録済みのTodo名があります");
@@ -84,16 +84,21 @@ public class MainController {
             return "edit";
         }
 
-        Optional<Todo> todoOpt = todoService.findByName(todo.getName());
+        Optional<Todo> todoOpt = todoService.findById(id);
         if (!todoOpt.isPresent()) {
+            return "/error/404";
+        }
+
+        Optional<Todo> todoOptName = todoService.findByName(todo.getName());
+        if (!todoOptName.isPresent()) {
             todo.setId(id);
-            todoService.save(todo);
+            todoService.update(todo);
             return "redirect:/";
         }
-        Todo target = todoOpt.get();
-        if (id == target.getId()) {
+        Todo target = todoOptName.get();
+        if (id.equals(target.getId())) {
             todo.setId(id);
-            todoService.save(todo);
+            todoService.update(todo);
             return "redirect:/";
         } else {
             model.addAttribute("message", "すでに登録済みのTodo名があります");
@@ -111,7 +116,7 @@ public class MainController {
         Todo target = todoOpt.get();
         target.setStatus(1D == status);
 
-        todoService.save(target);
+        todoService.update(target);
 
         return "redirect:/";
     }

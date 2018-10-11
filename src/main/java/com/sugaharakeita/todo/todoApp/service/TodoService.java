@@ -19,12 +19,24 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
-    public Todo save(Todo todo) {
-        return todoRepository.save(todo);
+    public Todo create(Todo todo) {
+        Todo newTodo = new Todo();
+        newTodo.setName(todo.getName());
+        newTodo.setLimit(todo.getLimit());
+        return todoRepository.save(newTodo);
     }
 
     public Optional<Todo> findById(Long id) {
         return todoRepository.findById(id);
+    }
+
+    public Todo update(Todo todo) {
+        Todo newTodo = new Todo();
+        newTodo.setId(todo.getId());
+        newTodo.setName(todo.getName());
+        newTodo.setLimit(todo.getLimit());
+        newTodo.setStatus(todo.isStatus());
+        return todoRepository.save(newTodo);
     }
 
     public List<Todo> search(String name) {
