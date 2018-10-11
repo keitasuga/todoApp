@@ -8,10 +8,7 @@
 </head>
 <body>
 <div class="wrapper">
-    <header>
-        <div class="title"><a href="/">TODOリスト</a></div>
-        <div class="search"><a th:href="@{/search}">検索</a></div>
-    </header>
+    <div th:replace="header"></div>
     <div class="main">
         <div class="ToDoForm">
             <div>
