@@ -54,8 +54,11 @@ public class MainController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Long id, Model model) {
-        Optional<Todo> todo = todoService.findById(id);
-        model.addAttribute("todo", todo);
+        Optional<Todo> todoOpt = todoService.findById(id);
+        if (!todoOpt.isPresent()) {
+            return "/error/404";
+        }
+        model.addAttribute("todo", todoOpt.get());
         return "edit";
     }
 
@@ -80,30 +83,23 @@ public class MainController {
 
     @PostMapping("/{id}/edit")
     public String update(@PathVariable Long id, @Valid @ModelAttribute Todo todo, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "edit";
-        }
-
         Optional<Todo> todoOpt = todoService.findById(id);
         if (!todoOpt.isPresent()) {
             return "/error/404";
         }
 
-        Optional<Todo> todoOptName = todoService.findByName(todo.getName());
-        if (!todoOptName.isPresent()) {
-            todo.setId(id);
-            todoService.update(todo);
-            return "redirect:/";
+        if (bindingResult.hasErrors()) {
+            return "edit";
         }
-        Todo target = todoOptName.get();
-        if (id.equals(target.getId())) {
-            todo.setId(id);
-            todoService.update(todo);
-            return "redirect:/";
-        } else {
+
+        Optional<Todo> todoOptName = todoService.findByName(todo.getName());
+        if (todoOptName.isPresent() && !todoOptName.get().getId().equals(id)) {
             model.addAttribute("message", "すでに登録済みのTodo名があります");
             return "edit";
         }
+        todo.setId(id);
+        todoService.update(todo);
+        return "redirect:/";
     }
 
     @PostMapping("/{id}/finish")
