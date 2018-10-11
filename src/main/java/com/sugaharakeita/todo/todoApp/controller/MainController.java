@@ -36,13 +36,19 @@ public class MainController {
 
     @PostMapping("/")
     public String create(Model model, @Valid @ModelAttribute Todo todo, BindingResult bindingResult) {
+        List<Todo> todos = todoService.findAll();
+        model.addAttribute("todos", todos);
         if (bindingResult.hasErrors()) {
-            List<Todo> todos = todoService.findAll();
-            model.addAttribute("todos", todos);
             return "main";
-        } else {
+        }
+
+        Optional<Todo> todoOpt = todoService.findByName(todo.getName());
+        if (!todoOpt.isPresent()) {
             todoService.save(todo);
             return "redirect:/";
+        } else {
+            model.addAttribute("message", "すでに登録済みのTodo名があります");
+            return "main";
         }
     }
 
@@ -73,13 +79,26 @@ public class MainController {
 
 
     @PostMapping("/{id}/edit")
-    public String update(@PathVariable Long id, @Valid @ModelAttribute Todo todo, BindingResult bindingResult) {
+    public String update(@PathVariable Long id, @Valid @ModelAttribute Todo todo, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
-        todo.setId(id);
-        todoService.save(todo);
-        return "redirect:/";
+
+        Optional<Todo> todoOpt = todoService.findByName(todo.getName());
+        if (!todoOpt.isPresent()) {
+            todo.setId(id);
+            todoService.save(todo);
+            return "redirect:/";
+        }
+        Todo target = todoOpt.get();
+        if (id == target.getId()) {
+            todo.setId(id);
+            todoService.save(todo);
+            return "redirect:/";
+        } else {
+            model.addAttribute("message", "すでに登録済みのTodo名があります");
+            return "edit";
+        }
     }
 
     @PostMapping("/{id}/finish")

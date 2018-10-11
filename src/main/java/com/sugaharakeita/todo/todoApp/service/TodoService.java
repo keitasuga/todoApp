@@ -31,7 +31,8 @@ public class TodoService {
         return todoRepository.findByNameContainsAndStatusIsFalseOrderByIdDesc(name);
     }
 
-    public Todo findByName(String name) {
+    public Optional<Todo> findByName(String name) {
         return todoRepository.findByName(name);
     }
+
 }

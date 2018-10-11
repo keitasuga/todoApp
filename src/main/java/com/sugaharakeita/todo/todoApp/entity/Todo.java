@@ -1,6 +1,5 @@
 package com.sugaharakeita.todo.todoApp.entity;
 
-import com.sugaharakeita.todo.todoApp.validation.Registered;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,7 +17,6 @@ public class Todo {
 
     @NotEmpty(message = "Todo名を入力してください")
     @Length(max = 30, message = "{max}文字以内で入力してください")
-    @Registered
     private String name;
 
     @NotNull(message = "期限を入力してください")
