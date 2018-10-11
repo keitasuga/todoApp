@@ -28,7 +28,7 @@ public class Todo {
 
     @CreatedDate
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate CreatedAt;
+    private LocalDate createdAt;
 
     public Long getId() {
         return id;
@@ -63,11 +63,11 @@ public class Todo {
     }
 
     public LocalDate getCreatedAt() {
-        return CreatedAt;
+        return createdAt;
     }
 
     private void setCreatedAt(LocalDate createdAt) {
-        CreatedAt = createdAt;
+        this.createdAt = createdAt;
     }
 
     @Override
@@ -77,17 +77,17 @@ public class Todo {
             ", name='" + name + '\'' +
             ", limit=" + limit +
             ", status=" + status +
-            ", CreatedAt=" + CreatedAt +
+            ", createdAt=" + createdAt +
             '}';
     }
 
     @PrePersist
     public void prePersist() {
-        CreatedAt = LocalDate.now();
+        createdAt = LocalDate.now();
     }
 
     @PreUpdate
     public void preUpdate() {
-        CreatedAt = LocalDate.now();
+        createdAt = LocalDate.now();
     }
 }

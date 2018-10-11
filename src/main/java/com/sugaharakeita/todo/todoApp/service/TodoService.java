@@ -4,10 +4,13 @@ package com.sugaharakeita.todo.todoApp.service;
 import com.sugaharakeita.todo.todoApp.entity.Todo;
 import com.sugaharakeita.todo.todoApp.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 @Transactional
@@ -16,7 +19,7 @@ public class TodoService {
     TodoRepository todoRepository;
 
     public List<Todo> findAll() {
-        return todoRepository.findAll();
+        return todoRepository.findAll(new Sort(DESC, "createdAt"));
     }
 
     public Todo create(Todo todo) {
@@ -40,7 +43,7 @@ public class TodoService {
     }
 
     public List<Todo> search(String name) {
-        return todoRepository.findByNameContainsAndStatusIsFalseOrderByIdDesc(name);
+        return todoRepository.findByNameContainsAndStatusIsFalseOrderByCreatedAtDesc(name);
     }
 
     public Optional<Todo> findByName(String name) {
