@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -39,6 +40,12 @@ public class MainController {
         List<Todo> todos = todoService.findAll();
         model.addAttribute("todos", todos);
         if (bindingResult.hasErrors()) {
+            return "main";
+        }
+
+        LocalDate today = LocalDate.now();
+        if (todo.getLimit().isBefore(today)) {
+            model.addAttribute("message", "日付を本日以降に設定してください");
             return "main";
         }
 
@@ -89,6 +96,12 @@ public class MainController {
         }
 
         if (bindingResult.hasErrors()) {
+            return "edit";
+        }
+
+        LocalDate today = LocalDate.now();
+        if (todo.getLimit().isBefore(today)) {
+            model.addAttribute("message", "日付を本日以降に設定してください");
             return "edit";
         }
 
