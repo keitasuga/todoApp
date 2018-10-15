@@ -3,6 +3,7 @@
     width: 1000px;
     min-height: 500px;
     background-color: gray;
+    border: solid 1px black;
 }
 
 header {
@@ -25,9 +26,9 @@ header {
 .main {
     width: 1000px;
     min-height: 450px;
-    background-color: blue;
+    background-color: #6fffc6;
     padding-top: 10px;
-    order:solid 1px black;
+    border-top: solid 1px black;
 }
 
 .ToDoForm {
@@ -36,13 +37,12 @@ header {
     background-color: white;
     margin: 0 auto;
     padding: 40px 20px 0;
-    order:solid 1px black;
+    border: solid 1px black;
 }
 
 .text {
     height: 70px;
     float: left;
-    margin-top: 30px;
 }
 
 .submit {
@@ -59,34 +59,69 @@ header {
 .TodoList {
     width: 800px;
     height: 100px;
-    background-color: red;
+    background-color: white;
     margin: 0 auto;
     margin-top: 10px;
     border:solid 1px black;
 }
 
 .ToDo {
+    width: 800px;
+    height: 100px;
     padding-top: 15px;
     margin-left: 20px;
-    float: left;
+    position: relative;
 }
 
 .edit {
     width: 100px;
     height: 70px;
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 140px;
     line-height: 70px;
     margin: 15px 20px 0 0;
     text-align: center;
     border:solid 1px black;
 }
 
-.status {
+.status-finished {
     width: 100px;
     height: 70px;
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 20px;
     line-height: 70px;
     margin: 15px 20px 0 0;
     text-align: center;
     border:solid 1px black;
+    background-color: aqua;
+}
+
+.status-unfinished {
+    width: 100px;
+    height: 70px;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    line-height: 70px;
+    margin: 15px 20px 0 0;
+    text-align: center;
+    border: solid 1px black;
+    background-color: red;
+}
+
+.text-danger {
+    color: red;
+}
+
+.search-box {
+    padding-top: 30px;
+    padding-left: 20px;
+}
+
+.notodo {
+    width: 760px;
+    height: 30px;
+    margin: 0 auto;
 }

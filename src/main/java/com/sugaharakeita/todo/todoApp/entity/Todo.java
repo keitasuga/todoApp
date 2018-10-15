@@ -1,23 +1,34 @@
 package com.sugaharakeita.todo.todoApp.entity;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 @Entity
 public class Todo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
-    @Length(max = 31)
+    @NotEmpty(message = "Todo名を入力してください")
+    @Length(max = 30, message = "{max}文字以内で入力してください")
     private String name;
 
-    @NotNull
+    @NotNull(message = "期限を入力してください")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "limit_date")
-    private String limit;
+    private LocalDate limit;
+
+    private boolean status;
+
+    @CreatedDate
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdAt;
 
     public Long getId() {
         return id;
@@ -35,11 +46,48 @@ public class Todo {
         this.name = name;
     }
 
-    public String getLimit() {
+    public LocalDate getLimit() {
         return limit;
     }
 
-    public void setLimit(String limit) {
+    public void setLimit(LocalDate limit) {
         this.limit = limit;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    private void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Todo{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", limit=" + limit +
+            ", status=" + status +
+            ", createdAt=" + createdAt +
+            '}';
+    }
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        createdAt = LocalDate.now();
     }
 }
