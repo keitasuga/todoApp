@@ -83,6 +83,7 @@ public class MainController {
             return "search";
         } else {
             model.addAttribute("message", "対象のToDoは見つかりません");
+            model.addAttribute("results", results);
             return "search";
         }
     }
