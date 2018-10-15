@@ -33,13 +33,15 @@ public class TodoService {
         return todoRepository.findById(id);
     }
 
-    public Todo update(Todo todo) {
-        Todo newTodo = new Todo();
-        newTodo.setId(todo.getId());
-        newTodo.setName(todo.getName());
-        newTodo.setLimit(todo.getLimit());
-        newTodo.setStatus(todo.isStatus());
-        return todoRepository.save(newTodo);
+    public Todo update(Todo todo, Todo target) {
+        target.setName(todo.getName());
+        target.setLimit(todo.getLimit());
+        target.setStatus(todo.isStatus());
+        return todoRepository.save(target);
+    }
+
+    public Todo changeStatus(Todo todo) {
+        return todoRepository.save(todo);
     }
 
     public List<Todo> search(String name) {

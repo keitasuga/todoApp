@@ -69,23 +69,21 @@ public class MainController {
         return "edit";
     }
 
-    @GetMapping(value = "/search")
+    @GetMapping("/search")
     public String search(Model model) {
         return "search";
     }
 
-    @GetMapping(value = "/search/result")
+    @GetMapping("/search/result")
     public String search(Model model, @RequestParam("name") String name) {
         List<Todo> results = todoService.search(name);
+        model.addAttribute("results", results);
         if (results.size() > 0) {
             model.addAttribute("message", "ToDoが" + results.size() + "件見つかりました");
-            model.addAttribute("results", results);
-            return "search";
         } else {
             model.addAttribute("message", "対象のToDoは見つかりません");
-            model.addAttribute("results", results);
-            return "search";
         }
+        return "search";
     }
 
 
@@ -111,8 +109,8 @@ public class MainController {
             model.addAttribute("message", "すでに登録済みのTodo名があります");
             return "edit";
         }
-        todo.setId(id);
-        todoService.update(todo);
+        Todo target = todoOpt.get();
+        todoService.update(todo, target);
         return "redirect:/";
     }
 
@@ -126,7 +124,7 @@ public class MainController {
         Todo target = todoOpt.get();
         target.setStatus(1D == status);
 
-        todoService.update(target);
+        todoService.changeStatus(target);
 
         return "redirect:/";
     }
